@@ -35,7 +35,7 @@ def sync_user(current_user: dict = Depends(get_current_user)):
         new_profile = {
             "uid": uid,
             "email": email,
-            "role": "admin", # Temporarily set to admin for testing
+            "role": "user",
             "searches": [],
             "saved_articles": []
         }
