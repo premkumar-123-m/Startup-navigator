@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { Send, Bot, User, Sparkles, Loader2, BookOpen } from 'lucide-react';
 import apiClient from '../api/client';
 import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const AiSearch = () => {
-  const [query, setQuery] = useState('');
+  const location = useLocation();
+  const [query, setQuery] = useState(location.state?.initialQuery || '');
   const [isLoading, setIsLoading] = useState(false);
   const { currentUser } = useAuth();
   const navigate = useNavigate();

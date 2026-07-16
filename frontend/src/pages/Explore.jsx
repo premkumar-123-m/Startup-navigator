@@ -11,7 +11,18 @@ const topics = [
   { id: 8, title: 'AI Tools & Tech', icon: Zap, desc: 'Leveraging AI for productivity, automation, and competitive advantage.', color: 'text-yellow-600', bg: 'bg-yellow-50 border-yellow-200 hover:border-yellow-400' },
 ];
 
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 const Explore = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
+
+  const filteredTopics = topics.filter(topic => 
+    topic.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+    topic.desc.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pt-24">
       <div className="mb-12">
@@ -27,17 +38,21 @@ const Explore = () => {
         </div>
         <input
           type="text"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
           className="block w-full pl-10 pr-3 py-4 border border-gray-300 rounded-xl leading-5 bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#FF6A00] focus:border-[#FF6A00] transition-all shadow-sm"
           placeholder="Search topics, articles, or keywords..."
         />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {topics.map((topic) => (
-          <div
-            key={topic.id}
-            className={`cursor-pointer rounded-2xl border p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${topic.bg} bg-white`}
-          >
+        {filteredTopics.length > 0 ? (
+          filteredTopics.map((topic) => (
+            <div
+              key={topic.id}
+              onClick={() => navigate('/ai-search', { state: { initialQuery: `Tell me about ${topic.title}` } })}
+              className={`cursor-pointer rounded-2xl border p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${topic.bg} bg-white`}
+            >
             <div className="flex items-center justify-between mb-4">
               <div className={`p-3 rounded-xl bg-white shadow-sm border border-gray-100 ${topic.color}`}>
                 <topic.icon className="w-6 h-6" />
@@ -46,7 +61,12 @@ const Explore = () => {
             <h3 className="text-lg font-bold text-gray-900 mb-2">{topic.title}</h3>
             <p className="text-sm text-gray-600">{topic.desc}</p>
           </div>
-        ))}
+        ))
+        ) : (
+          <div className="col-span-full py-12 text-center text-gray-500">
+            No topics found matching "{searchTerm}". Try a different search term.
+          </div>
+        )}
       </div>
     </div>
   );
