@@ -19,7 +19,10 @@ const Resources = () => {
             Curated tools, templates, and guides to accelerate your startup journey.
           </p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors shadow-sm">
+        <button 
+          onClick={() => alert("Filter options coming soon!")}
+          className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors shadow-sm"
+        >
           <Filter className="w-4 h-4" /> Filter Resources
         </button>
       </div>
@@ -37,7 +40,16 @@ const Resources = () => {
             <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-[#FF6A00] transition-colors">{res.title}</h3>
             <p className="text-gray-600 text-sm mb-6 flex-grow">{res.desc}</p>
             
-            <button className="flex items-center gap-2 text-sm font-bold text-gray-900 hover:text-[#FF6A00] transition-colors mt-auto w-fit">
+            <button 
+              onClick={() => {
+                if (res.type === 'Tool') {
+                  window.open("https://example.com", "_blank");
+                } else {
+                  alert(`Starting download for: ${res.title}`);
+                }
+              }}
+              className="flex items-center gap-2 text-sm font-bold text-gray-900 hover:text-[#FF6A00] transition-colors mt-auto w-fit"
+            >
               {res.type === 'Tool' ? (
                 <><ExternalLink className="w-4 h-4" /> Visit Website</>
               ) : (

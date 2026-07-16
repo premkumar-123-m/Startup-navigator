@@ -102,8 +102,12 @@ const Dashboard = () => {
           {stats?.recent_searches?.length > 0 ? (
             <div className="space-y-4">
               {stats.recent_searches.map((query, i) => (
-                <div key={i} className="flex items-center justify-between p-4 bg-gray-50 rounded-xl border border-gray-100 hover:border-orange-200 hover:bg-orange-50/50 transition-colors cursor-pointer">
-                  <p className="text-gray-700 text-sm">{query}</p>
+                <div 
+                  key={i} 
+                  onClick={() => navigate('/ai-search', { state: { initialQuery: query } })}
+                  className="flex items-center justify-between p-4 bg-gray-50 rounded-xl border border-gray-100 hover:border-orange-200 hover:bg-orange-50/50 transition-colors cursor-pointer"
+                >
+                  <p className="text-gray-700 text-sm">{query || 'Untitled Search'}</p>
                   <ExternalLink className="w-4 h-4 text-gray-400" />
                 </div>
               ))}
@@ -117,21 +121,27 @@ const Dashboard = () => {
         <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
           <h2 className="text-xl font-bold text-gray-900 mb-6">Saved Articles</h2>
           <div className="space-y-4">
-            <div className="flex gap-3 items-start">
-              <div className="p-2 bg-blue-50 rounded-lg shrink-0">
+              <div 
+                className="flex gap-3 items-start cursor-pointer group"
+                onClick={() => alert("Opening article: The Ultimate Guide to Y-Combinator (Coming Soon)")}
+              >
+              <div className="p-2 bg-blue-50 rounded-lg shrink-0 group-hover:bg-blue-100 transition-colors">
                 <Book className="w-4 h-4 text-blue-500" />
               </div>
               <div>
-                <h4 className="text-gray-900 text-sm font-medium mb-1 hover:text-[#FF6A00] cursor-pointer transition-colors">The Ultimate Guide to Y-Combinator</h4>
+                <h4 className="text-gray-900 text-sm font-medium mb-1 group-hover:text-[#FF6A00] transition-colors">The Ultimate Guide to Y-Combinator</h4>
                 <p className="text-xs text-gray-500">Funding & Investment</p>
               </div>
             </div>
-            <div className="flex gap-3 items-start">
-              <div className="p-2 bg-red-50 rounded-lg shrink-0">
+            <div 
+              className="flex gap-3 items-start cursor-pointer group"
+              onClick={() => alert("Opening article: Understanding Term Sheets (Coming Soon)")}
+            >
+              <div className="p-2 bg-red-50 rounded-lg shrink-0 group-hover:bg-red-100 transition-colors">
                 <FileText className="w-4 h-4 text-red-500" />
               </div>
               <div>
-                <h4 className="text-gray-900 text-sm font-medium mb-1 hover:text-[#FF6A00] cursor-pointer transition-colors">Understanding Term Sheets</h4>
+                <h4 className="text-gray-900 text-sm font-medium mb-1 group-hover:text-[#FF6A00] transition-colors">Understanding Term Sheets</h4>
                 <p className="text-xs text-gray-500">Legal Compliance</p>
               </div>
             </div>
