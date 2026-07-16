@@ -22,8 +22,8 @@ def get_dashboard_stats(current_user: dict = Depends(get_current_user)):
         raise HTTPException(status_code=404, detail="User profile not found")
         
     data = user_doc.to_dict()
-    searches = data.get("searches", [])
-    saved = data.get("saved_articles", [])
+    searches = data.get("searches") or []
+    saved = data.get("saved_articles") or []
     
     return {
         "total_searches": len(searches),
