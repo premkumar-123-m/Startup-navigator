@@ -23,7 +23,7 @@ def initialize_firebase():
                 firebase_admin.initialize_app(cred)
                 print("Firebase initialized successfully from file.")
             else:
-                print(f"Warning: No Firebase credentials found. Firebase is NOT initialized.")
+                print("Warning: No Firebase credentials found. Firebase is NOT initialized.")
         except Exception as e:
             print(f"Error initializing Firebase: {e}")
 

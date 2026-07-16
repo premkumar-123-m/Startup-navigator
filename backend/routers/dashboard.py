@@ -28,6 +28,6 @@ def get_dashboard_stats(current_user: dict = Depends(get_current_user)):
     return {
         "total_searches": len(searches),
         "saved_articles": len(saved),
-        "topics_explored": len(set([s.get("category", "General") for s in searches])), # simplified
-        "recent_searches": [s.get("query") for s in searches[-5:]] # last 5
+        "topics_explored": len({s.get("category", "General") if isinstance(s, dict) else "General" for s in searches}),
+        "recent_searches": [s.get("query") if isinstance(s, dict) else str(s) for s in searches[-5:]]
     }
