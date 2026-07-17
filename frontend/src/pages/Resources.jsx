@@ -2,12 +2,12 @@ import { Download, ExternalLink, Filter } from 'lucide-react';
 
 const Resources = () => {
   const resources = [
-    { type: 'Template', title: 'Y-Combinator SAFE Note Template', desc: 'Standard Simple Agreement for Future Equity document used by top startups.', tag: 'Legal' },
-    { type: 'Tool', title: 'Stripe Atlas', desc: 'A powerful tool to handle company formation and banking for internet startups.', tag: 'Registration' },
-    { type: 'Guide', title: 'The Lean Startup Methodology', desc: 'Essential reading for building a product that customers actually want.', tag: 'Growth' },
-    { type: 'Template', title: 'Cap Table Excel Model', desc: 'Track equity distribution among founders, employees, and investors.', tag: 'Finance' },
-    { type: 'Tool', title: 'Notion Startup Workspace', desc: 'Pre-built workspace templates for team collaboration and wiki.', tag: 'Productivity' },
-    { type: 'Template', title: 'Pitch Deck Structure', desc: 'Sequoia Capital\'s recommended slide structure for raising seed rounds.', tag: 'Funding' },
+    { type: 'Template', title: 'Y-Combinator SAFE Note Template', desc: 'Standard Simple Agreement for Future Equity document used by top startups.', tag: 'Legal', link: 'https://www.ycombinator.com/documents' },
+    { type: 'Tool', title: 'Stripe Atlas', desc: 'A powerful tool to handle company formation and banking for internet startups.', tag: 'Registration', link: 'https://stripe.com/atlas' },
+    { type: 'Guide', title: 'The Lean Startup Methodology', desc: 'Essential reading for building a product that customers actually want.', tag: 'Growth', link: 'http://theleanstartup.com/' },
+    { type: 'Template', title: 'Cap Table Excel Model', desc: 'Track equity distribution among founders, employees, and investors.', tag: 'Finance', link: 'https://carta.com/blog/equity-cap-table-template/' },
+    { type: 'Tool', title: 'Notion Startup Workspace', desc: 'Pre-built workspace templates for team collaboration and wiki.', tag: 'Productivity', link: 'https://www.notion.so/startups' },
+    { type: 'Template', title: 'Pitch Deck Structure', desc: 'Sequoia Capital\'s recommended slide structure for raising seed rounds.', tag: 'Funding', link: 'https://www.sequoiacap.com/article/writing-a-business-plan/' },
   ];
 
   return (
@@ -42,8 +42,8 @@ const Resources = () => {
             
             <button 
               onClick={() => {
-                if (res.type === 'Tool') {
-                  window.open("https://example.com", "_blank");
+                if (res.link) {
+                  window.open(res.link, "_blank");
                 } else {
                   alert(`Starting download for: ${res.title}`);
                 }
