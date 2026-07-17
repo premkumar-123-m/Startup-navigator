@@ -4,17 +4,36 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Sparkles, Mail, Lock, AlertCircle, ArrowRight } from 'lucide-react';
 
 const Login = () => {
-  const { login, signup, loginWithGoogle } = useAuth();
+  const { login, signup, loginWithGoogle, resetPassword } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
   // Where to redirect after login (default to dashboard)
   const from = location.state?.from?.pathname || "/dashboard";
+
+  const handleResetPassword = async () => {
+    if (!email) {
+      setError('Please enter your email address first to reset your password.');
+      return;
+    }
+    setError('');
+    setMessage('');
+    setLoading(true);
+    try {
+      await resetPassword(email);
+      setMessage('Password reset email sent! Check your inbox.');
+    } catch (err) {
+      setError(err.message || 'Failed to send password reset email.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -70,6 +89,13 @@ const Login = () => {
           </div>
         )}
 
+        {message && (
+          <div className="bg-green-50 text-green-700 p-4 rounded-xl text-sm flex items-start gap-3 border border-green-100">
+            <Sparkles className="w-5 h-5 shrink-0" />
+            <span>{message}</span>
+          </div>
+        )}
+
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-4">
             <div>
@@ -90,7 +116,18 @@ const Login = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+              <div className="flex justify-between items-center mb-1">
+                <label className="block text-sm font-medium text-gray-700">Password</label>
+                {isLogin && (
+                  <button
+                    type="button"
+                    onClick={handleResetPassword}
+                    className="text-xs font-medium text-[#FF6A00] hover:text-[#E65100]"
+                  >
+                    Forgot password?
+                  </button>
+                )}
+              </div>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <Lock className="h-5 w-5 text-gray-400" />
